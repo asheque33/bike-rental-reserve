@@ -38,7 +38,7 @@ const login = catchAsync(async (req, res) => {
   });
 });
 const getUserByAuthToken = catchAsync(async (req, res) => {
-  const result = await authServices.getUserByAuthTokenFromBrowser();
+  const result = await authServices.getUserByAuthTokenFromDB();
   sendResponse(res, {
     success: true,
     statusCode: 200,
@@ -46,8 +46,20 @@ const getUserByAuthToken = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const updateProfile = catchAsync(async (req, res) => {
+  const { email } = req.user;
+  console.log("req.user", req.user);
+  const result = await authServices.updateProfileFromDB(email, req.body);
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Profile updated successfully",
+    data: result,
+  });
+});
 export const authController = {
   register,
   login,
   getUserByAuthToken,
+  updateProfile,
 };

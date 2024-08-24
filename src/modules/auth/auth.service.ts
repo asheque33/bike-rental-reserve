@@ -51,12 +51,25 @@ const loginIntoDB = async (payload: ILoginUser) => {
     userExisted,
   };
 };
-const getUserByAuthTokenFromBrowser = () => {
+const getUserByAuthTokenFromDB = () => {
   const result = User.find({});
+  return result;
+};
+const updateProfileFromDB = (email: string, payload: Partial<IUser>) => {
+  // logic to update profile
+  const updateProfileDoc = {
+    name: payload.name,
+    phone: payload.phone,
+  };
+  const result = User.findOneAndUpdate({ email }, updateProfileDoc, {
+    runValidators: true,
+    new: true,
+  }).select("-createdAt -updatedAt -__v");
   return result;
 };
 export const authServices = {
   registerIntoDB,
   loginIntoDB,
-  getUserByAuthTokenFromBrowser,
+  getUserByAuthTokenFromDB,
+  updateProfileFromDB,
 };

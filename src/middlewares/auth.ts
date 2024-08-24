@@ -1,38 +1,32 @@
 import config from "../config";
-import { USER_ROLE } from "../modules/user/user.constants";
+import { TUser_Role, USER_ROLE } from "../modules/user/user.constants";
 import { User } from "../modules/user/user.model";
+
 import catchAsync from "../utils/catchAsync";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-const auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
+const auth = (...requiredRoles: TUser_Role[]) => {
   return catchAsync(async (req, res, next) => {
     const accessToken = req.headers.authorization?.split(" ")[1];
     if (!accessToken) {
       throw new Error("No accessToken provided");
     }
-    jwt.verify(
+    const decoded = jwt.verify(
       accessToken as string,
-      config.jwt_access_private_key as string,
-      function (error, decoded) {
-        if (error) {
-          next(error);
-        } else {
-          // req.user = decoded;
-          const { email, role } = decoded as JwtPayload;
-          if (!requiredRoles.includes(role)) {
-            throw new Error("You are not authorized to access");
-          }
-          const user = User.findOne({ email });
-          if (!user || user?.role !== role) {
-            throw new Error("You are not allowed to access this");
-          }
-          req.user = user;
-          next();
-        }
-      }
+      config.jwt_access_private_key as string
     );
+    const { email, role } = decoded as JwtPayload;
+    if (!requiredRoles.includes(role)) {
+      throw new Error("You are not authorized to access");
+    }
 
-    // next();
+    const user = await User.findOne({ email });
+    if (!user || user?.role !== role) {
+      throw new Error("You are not allowed to access this");
+    }
+    //! make global Request interface object in index.d.ts file
+    req.user = decoded as JwtPayload;
+    next();
   });
 };
 export default auth;
