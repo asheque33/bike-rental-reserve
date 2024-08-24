@@ -2,7 +2,6 @@ import config from "../../config";
 import { isPasswordMatched } from "../../utils/isPasswordMatched";
 import { IUser } from "../user/user.interface";
 import { User } from "../user/user.model";
-
 import jwt from "jsonwebtoken";
 import { ILoginUser } from "./auth.interface";
 
@@ -52,7 +51,12 @@ const loginIntoDB = async (payload: ILoginUser) => {
     userExisted,
   };
 };
+const getUserByAuthTokenFromBrowser = () => {
+  const result = User.find({});
+  return result;
+};
 export const authServices = {
   registerIntoDB,
   loginIntoDB,
+  getUserByAuthTokenFromBrowser,
 };

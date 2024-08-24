@@ -37,7 +37,17 @@ const login = catchAsync(async (req, res) => {
     data: userExisted,
   });
 });
+const getUserByAuthToken = catchAsync(async (req, res) => {
+  const result = await authServices.getUserByAuthTokenFromBrowser();
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "User profile retrieved successfully",
+    data: result,
+  });
+});
 export const authController = {
   register,
   login,
+  getUserByAuthToken,
 };
