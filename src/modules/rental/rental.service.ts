@@ -33,6 +33,11 @@ const createRentalIntoDB = async (payload: IBooking) => {
     session.endSession();
   }
 };
+const getAllRentalsFromDB = async () => {
+  const rentals = await Booking.find({});
+  return rentals;
+};
 export const rentalServices = {
   createRentalIntoDB,
+  getAllRentalsFromDB,
 };
