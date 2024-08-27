@@ -7,4 +7,6 @@ export interface IUser {
   phone: string;
   address: string;
   role: keyof typeof USER_ROLE;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

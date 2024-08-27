@@ -3,14 +3,14 @@ import { IBike } from "./bike.interface";
 
 const bikeSchema = new Schema<IBike>(
   {
-    name: { type: "string", required: true },
-    description: { type: "string", required: true },
-    isAvailable: { type: "boolean", default: true },
-    pricePerHour: { type: "number", required: true },
-    cc: { type: "number", required: true },
-    year: { type: "number", required: true },
-    model: { type: "string", required: true },
-    brand: { type: "string", required: true },
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    isAvailable: { type: Boolean, default: true },
+    pricePerHour: { type: Number, required: true },
+    cc: { type: Number, required: true },
+    year: { type: Number, required: true },
+    model: { type: String, unique: true, required: true },
+    brand: { type: String, required: true },
   },
   {
     toJSON: {

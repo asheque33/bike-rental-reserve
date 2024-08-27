@@ -1,10 +1,10 @@
 import { Types } from "mongoose";
 
 export interface IBooking {
-  userId: Types.ObjectId;
+  userId?: Types.ObjectId;
   bikeId: Types.ObjectId;
-  startTime: Date;
+  startTime?: Date;
   returnTime?: Date;
   totalCost: number;
-  isReturned: boolean;
+  isReturned?: boolean;
 }

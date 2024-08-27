@@ -14,6 +14,7 @@ export const handleMongooseValidationError = (
       message: value?.message,
     })
   );
+  // ! for missing any required fields in 1st layer
   return {
     statusCode,
     message: "Validation Error",

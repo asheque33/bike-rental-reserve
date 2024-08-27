@@ -16,9 +16,7 @@ const registerIntoDB = async (payload: IUser) => {
 };
 const loginIntoDB = async (payload: ILoginUser) => {
   const { email, password } = payload;
-  const userExisted = await User.findOne({ email: payload.email }).select(
-    "+password"
-  );
+  const userExisted = await User.findOne({ email }).select("+password");
 
   if (!userExisted) {
     throw new Error("User not found");
@@ -31,6 +29,7 @@ const loginIntoDB = async (payload: ILoginUser) => {
     throw new Error("Password mismatch");
   }
   const jwtPayload = {
+    _id: userExisted._id,
     email: userExisted.email,
     role: userExisted.role,
   };
@@ -51,8 +50,8 @@ const loginIntoDB = async (payload: ILoginUser) => {
     userExisted,
   };
 };
-const getUserByAuthTokenFromDB = () => {
-  const result = User.find({});
+const getUserByAuthTokenFromDB = (email: string) => {
+  const result = User.findOne({ email });
   return result;
 };
 const updateProfileFromDB = (email: string, payload: Partial<IUser>) => {

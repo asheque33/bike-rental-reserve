@@ -38,7 +38,8 @@ const login = catchAsync(async (req, res) => {
   });
 });
 const getUserByAuthToken = catchAsync(async (req, res) => {
-  const result = await authServices.getUserByAuthTokenFromDB();
+  const { email } = req.user;
+  const result = await authServices.getUserByAuthTokenFromDB(email);
   sendResponse(res, {
     success: true,
     statusCode: 200,
@@ -48,6 +49,7 @@ const getUserByAuthToken = catchAsync(async (req, res) => {
 });
 const updateProfile = catchAsync(async (req, res) => {
   const { email } = req.user;
+
   console.log("req.user", req.user);
   const result = await authServices.updateProfileFromDB(email, req.body);
   sendResponse(res, {

@@ -1,4 +1,9 @@
-export const handleMongooseCastError = (err) => {
+import mongoose from "mongoose";
+import { TGenericErrorResponse } from "../interface/errorInterface";
+
+export const handleMongooseCastError = (
+  err: mongoose.Error.CastError
+): TGenericErrorResponse => {
   const extractedText = err?.message?.match(/"([^"]+)"/)[1];
   const errorMessage = [
     {

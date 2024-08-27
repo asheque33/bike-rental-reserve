@@ -1,4 +1,5 @@
 import config from "../config";
+import AppError from "../errors/AppError";
 import { TUser_Role, USER_ROLE } from "../modules/user/user.constants";
 import { User } from "../modules/user/user.model";
 
@@ -9,7 +10,7 @@ const auth = (...requiredRoles: TUser_Role[]) => {
   return catchAsync(async (req, res, next) => {
     const accessToken = req.headers.authorization?.split(" ")[1];
     if (!accessToken) {
-      throw new Error("No accessToken provided");
+      throw new AppError(401, "You have no access to this route.");
     }
     const decoded = jwt.verify(
       accessToken as string,

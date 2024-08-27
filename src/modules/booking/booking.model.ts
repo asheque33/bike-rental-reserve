@@ -5,8 +5,8 @@ const bookingSchema = new Schema<IBooking>(
   {
     userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     bikeId: { type: Schema.Types.ObjectId, required: true, ref: "Bike" },
-    startTime: { type: Date, required: true },
-    returnTime: { type: Date },
+    startTime: { type: Date },
+    returnTime: { type: Date, default: null },
     totalCost: { type: Number, default: 0, required: true },
     isReturned: { type: Boolean, default: false },
   },

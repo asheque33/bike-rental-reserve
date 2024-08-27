@@ -7,9 +7,17 @@ const createBikeIntoDB = async (payload: IBike) => {
 };
 const getBikesFromDB = async () => {
   const bikes = await Bike.find({}).select("-__v");
+
+  // if (!bikes.length) {
+  //   return {
+  //     success: false,
+  //     message: "No Data found",
+  //     data: [],
+  //   };
+  // }
   return bikes;
 };
-const updateBikeIntoDB = async (_id: string, payload: IBike) => {
+const updateBikeIntoDB = async (_id: string, payload: Partial<IBike>) => {
   const updatedDoc = {
     pricePerHour: payload.pricePerHour,
   };
