@@ -29,12 +29,19 @@ const getAllRentals = catchAsync(async (req, res) => {
   });
 });
 const updateRental = catchAsync(async (req, res) => {
+  const { id } = req.params;
   const userId = req.user._id;
-  const rental = await rentalServices.updateRentalIntoDB(userId, req.body);
+  const rental = await rentalServices.updateRentalIntoDB(
+    id
+    //   {
+    //   userId,
+    //   ...req.body,
+    // }
+  );
   sendResponse(res, {
     success: true,
     statusCode: 200,
-    message: "Rental updated successfully",
+    message: "Bike returned successfully",
     data: rental,
   });
 });
