@@ -4,7 +4,8 @@ import { TGenericErrorResponse } from "../interface/errorInterface";
 export const handleMongooseCastError = (
   err: mongoose.Error.CastError
 ): TGenericErrorResponse => {
-  const extractedText = err?.message?.match(/"([^"]+)"/)[1];
+  const match = err?.message?.match(/"([^"]+)"/);
+  const extractedText = match ? match[1] : "_id";
   const errorMessage = [
     {
       path: err?.path,

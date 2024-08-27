@@ -14,7 +14,7 @@ router.post(
 );
 router.get(
   "/",
-  auth(USER_ROLE.user, USER_ROLE.admin),
+
   rentalController.getAllRentals
 );
 router.put(
